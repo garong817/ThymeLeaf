@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>rongcake</title>
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<style type="text/css">
+.topul{
+   width: 400px;
+   display: flex; 
+}
+</style>
+</head>
+<body>
+<!-- header -->
+      <header>
+         <!-- header inner -->
+         <div class="header">
+            <div class="head_top">
+               <div class="container">
+                  <div class="row">
+                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                       <div class="top-box">
+                        <ul class="sociel_link">
+                         <li> <a href="#"><i class="fa fa-facebook-f"></i></a></li>
+                         <li> <a href="#"><i class="fa fa-twitter"></i></a></li>
+                         <li> <a href="#"><i class="fa fa-instagram"></i></a></li>
+                         <li> <a href="#"><i class="fa fa-linkedin"></i></a></li>
+                     </ul>
+                    </div>
+                  </div>
+                  <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12">
+                       <div class="top-box">
+                        <p>🍀우리들의 행복한 운동시간🍀</p>
+                    </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                  <div class="full">
+                     <div class="center-desk">
+                        <div class="logo"> <a href="/"><img src="../images/Lucky(1).png" alt="logo"/></a> </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-7 col-lg-7 col-md-9 col-sm-9">
+                  <div class="menu-area">
+                     <div class="limit-box">
+                        <nav class="main-menu">
+                           <ul class="menu-area-main" style="margin-top: 80px;font-size: 20px;">
+                              <li class="active"> <a href="/">Home</a> </li>
+                              <li><a href="/music/list">운동 플레이리스트</a></li>
+                              <li><a class="dropwomen" href="/wshop/main">우먼즈</a>
+    							 <ul>
+						          <li><a href="/wshop/main">우먼즈 상품 목록</a></li>
+						          <li><a href="/wshop/find">내가 찾는 우먼즈</a></li>
+						        </ul>
+							  </li>  
+                              	 <li><a class="dropmans" href="/mshop/main">맨즈</a>
+                              	  <ul>
+                              	  <li><a href="/mshop/main">맨즈 상품 목록</a></li>
+						          <li><a href="/mshop/find">내가 찾는 맨즈</a></li>
+                              	  </ul>
+                               </li>
+                              <li><a href="/board/list">자유게시판</a> </li>
+                              <!-- <li class="mean-last"> <a href="#contact">signup</a> </li> -->
+                               
+                           </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2" id="logApp" style="margin-bottom: 20px;">
+                  <!-- <li><a class="buy" style="margin-top: 100px;" href="#">Login</a></li> -->
+               		<ul class="inline" th:if="${session.id==null}">
+        				<li><i class="fa fa-phone"></i>ID:<input type=text ref="id" size=18 v-model="id"> </li>
+       					<li><i class="fa fa-envelope-o"></i>PW:<input type=password ref="pwd" size=18 v-model="pwd"> </li>
+        				<li><input type=button value="로그인" @click="login()"></li>
+      				</ul>
+        				<ul class="inline topul" th:unless="${session.id==null}">
+        					<li>🖤<span th:text="${session.name}"></span></li>&nbsp;
+       						<li>님 로그인 되었습니다🖤</li>&nbsp;
+        					<li><input type=button value="로그아웃" @click="logout()"></li>	
+      					</ul>
+               		</div>
+            	</div>
+            </div>
+      </header>
+      <script>
+    // id:[[${id}]]
+    let logApp=Vue.createApp({
+    	data(){
+    		return {
+    			id:'',
+    			pwd:'' 
+    		}
+    	},
+    	methods:{
+    		login(){
+    			if(this.id==="")
+    			{
+    				this.$refs.id.focus()
+    				return
+    			}
+    			if(this.pwd==="")
+    			{
+    				this.$refs.pwd.focus()
+    				return
+    			}
+    			axios.post('/member/login',null,{
+    				params:{
+    					id:this.id,
+    					pwd:this.pwd
+    				}
+    			}).then(res=>{
+    				if(res.data==='NOID')
+    				{
+    				   alert("아이디가 존재하지 않습니다")
+    				   this.id='';
+    				   this.pwd='';
+    				   this.$refs.id.focus();
+    				}
+    				else if(res.data==='NOPWD')
+    				{
+    					alert("비밀번호가 틀립니다")
+    					this.pwd='';
+    					this.$refs.pwd.focus()
+    				}
+    				else
+    				{
+    					location.href="/"
+    				}
+    			})
+    		},
+    		logout(){
+    			axios.get('/member/logout').then(res=>{
+    				if(res.data==='yes')
+    				{
+    				    location.href="/"	
+    				}
+    				else
+    				{
+    				    alert("로그아웃 실패하셨습니다")	
+    				}
+    			})
+    		}
+    	}
+    }).mount('#logApp')
+   </script>
+  </div>
+      <!-- end header -->
+</body>
+</html>

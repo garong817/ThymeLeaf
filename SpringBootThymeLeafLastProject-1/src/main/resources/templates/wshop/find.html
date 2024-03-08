@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>우먼즈 상품 찾기</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="wrapper row3">
+    <main class="container clear">
+        <!-- main body -->
+        <div class="content">
+            <div id="gallery">
+                <figure>
+                	<h2 class="sectiontitle text-center"><strong>WOMENS</strong></h2>
+                    <header class="heading">
+                        <form method="post" action="/wshop/find" class="inline">
+                            <input type="text" name="title" size="30" th:value="${title}" required>
+                            <input type="submit" value="검색">
+                        </form>
+                    </header>
+                    <ul class="nospace clear row text-center">
+                        <li th:each="vo, i : ${list}" class="col-md-4">
+                            <a th:href="@{/wshop/detail(jwno=${vo.jwno})}">
+                                <img th:src="${vo.poster}">
+                                <br>
+                                <p class="product-title" th:text="${vo.title}" style="font-size: 18px;color:black"></p>
+                                <!-- 상품명 출력 -->
+                                <p th:text="'가격: ' + ${vo.price}" style="font-size: 18px;color:black"></p>
+                                <!-- 가격 출력 -->
+                            </a>
+                        </li>
+                    </ul>
+                </figure>
+            </div>
+            <div class="text-center">
+                <nav class="pagination">
+                    <ul class="pagination pagination-lg">
+                        <li th:if="${startPage > 1}"><a th:href="@{/wshop/find(page=${startPage-1})}">&laquo; Previous</a></li>
+                        <li th:class="${curpage == i ? 'current' : ''}" th:each="i:${#numbers.sequence(startPage,endPage)}">
+                            <a th:href="@{/wshop/find(page=${i})}" th:text="${i}"></a></li>
+                        <li th:if="${endPage < totalpage}"><a th:href="@{/wshop/find(page=${endPage+1})}">Next &raquo;</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- / main body -->
+        <div class="clear"></div>
+    </main>
+</div>
+</body>
+</html>

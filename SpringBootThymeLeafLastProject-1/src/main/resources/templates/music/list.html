@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>운동 플레이 리스트 목록</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<style>
+img:hover {
+    opacity: 0.7;
+    transition: opacity 0.4s; /* 호버 효과 시간 설정 */
+}
+
+.product-title {
+    margin-top: 10px; /* 포스터와 상품명 사이 간격 조절 */
+}
+</style>
+</head>
+<body>
+<div class="wrapper row3">
+    <main class="container clear"> 
+        <div class="content"> 
+            <div id="gallery">
+                <figure>
+                    <h2 class="sectiontitle text-center"><strong>오늘의 추천 운동 노래🎵</strong></h2>
+                    <br>
+                    <ul class="nospace clear row text-center">
+                        <li th:each="vo,i:${list}" class="col-md-4">
+                            <!-- 상세 페이지 링크를 없앰 -->
+                            <div>
+                                <img th:src="${vo.poster}">
+                                <br>
+                                <p class="product-title" th:text="${vo.title}" style="font-size: 18px;color:black"></p> <!-- 노래 제목 출력 -->
+                                <p th:text="${vo.singer}" style="font-size: 18px;color:black"></p> <!-- 가수명 출력 -->
+                            </div>
+                        </li>
+                    </ul>
+                </figure>
+            </div>
+            <div class="text-center">
+                <nav class="pagination">
+                    <ul class="pagination pagination-lg">
+                        <li th:if="${startPage>1}"><a th:href="@{/music/list(page=${startPage-1})}">&laquo; Previous</a></li>
+                        <li th:class="${curpage==i?'current':''}" th:each="i:${#numbers.sequence(startPage,endPage)}">
+                            <a th:href="@{/music/list(page=${i})}" th:text="${i}"></a></li>
+                        <li th:if="${endPage<totalpage}"><a th:href="@{/music/list(page=${endPage+1})}">Next &raquo;</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="clear"></div>
+    </main>
+</div>
+</body>
+</html>
