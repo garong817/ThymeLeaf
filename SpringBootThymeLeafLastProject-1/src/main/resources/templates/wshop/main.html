@@ -52,15 +52,14 @@ img:hover {
                 <!-- 최근 본 상품 목록 -->
                 <div>
                     <h3>최근 본 우먼즈 상품</h3>
-                    <ul>
-                        <li th:each="recentProduct : ${recentProducts}">
-                            <a th:href="@{/wshop/detail(jwno=${recentProduct.jwno})}">
-                                <img th:src="${recentProduct.poster}" th:title="${recentProduct.title}" style="width: 100px; height: 100px; margin-left: 5px">
-                            </a>
-                        </li>
-                    </ul>
+                    <div class="inline">
+				     <a th:href="@{/wshop/detail(jwno=${cvo.jwno})}" th:each="cvo:${cList}">
+				     	<img th:src="${cvo.poster}" style="width: 100px;height: 100px;margin-left: 10px">
+				     </a>
+				    </div>
                 </div>
             </div>
+            <div style="height: 20px"></div>
             <div class="clear"></div>
         </main>
     </div>

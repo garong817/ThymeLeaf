@@ -8,23 +8,23 @@
 <script type="text/javascript">
 let i=0;
 $(function(){
-    $('.updates').click(function(){
-        $('.ups').hide()
-        $('.updates').val('수정')
-        let no=$(this).attr("alt");
-        if(i==0)
-        {
-            $(this).val("취소");
-            $('#u'+no).show()
-            i=1;
-        }
-        else
-        {
-            $(this).val("수정");
-            $('#u'+no).hide()
-            i=0;
-        }
-    })
+	$('.updates').click(function(){
+		$('.ups').hide()
+		$('.updates').val('수정')
+		let no=$(this).attr("alt");
+		if(i==0)
+		{
+			$(this).val("취소");
+			$('#u'+no).show()
+			i=1;
+		}
+		else
+		{
+			$(this).val("수정");
+			$('#u'+no).hide()
+			i=0;	
+		}
+	})
 })
 </script>
 </head>
@@ -68,53 +68,61 @@ $(function(){
 	<td width="55%" style="font-size: 25px;" th:text="${vo.price}"></td>
 	</tr>
    </table>
-    
+    <table class="table">
+    <tr>
+      <td align="right">
+        <input type=button value="메인으로 돌아가기" onclick="javascript:history.back()">
+      </td>
+    </tr>
+  </table>
    <div style="height: 20px"></div>
-   <table class="table">
-    <tr>
-     <td>
-      <table class="table" th:each="rvo:${list}">
-        <tr>
-         <td align="left" th:text="|◑ ${rvo.name} ( ${rvo.regdate} )|"></td>
-         <td align="right">
-           <span th:if="${session.id==rvo.id}" class="inline">
-            <input type=button value="수정" class="btn-xs btn-danger updates"
-              th:alt="${rvo.no}"
-            >
-            <a th:href="@{/reply/delete(jwno=${rvo.jwno},no=${rvo.no})}" class="btn btn-xs btn-success">삭제</a>
-           </span>
-         </td>
-        </tr>
-        <tr>
-         <td colspan="2">
-          <pre style="white-space: pre-wrap;background-color: white;border:none" th:text="${rvo.msg}"></pre>
-         </td>
-        </tr>
-        <tr th:id="|u${rvo.no}|" class="ups" style="display:none">
-         <td colspan="2">
-             <form method="post" action="/reply/update">
-               <input type="hidden" name="no" th:value="${rvo.no}">
-               <input type="hidden" name="jwno" th:value="${rvo.jwno}">
-               <textarea rows="5" cols="60" style="float: left" required name="msg" th:text="${rvo.msg}"></textarea>
-               <input type=submit value="댓글수정" style="height:95px;width:100px;background-color: green">
-              </form>
-         </td>
-        </tr>
-      </table>
-     </td>
-    </tr>
-   <table class="table" th:if="${session.id!=null}">
-    <tr>
-     <td>
-      <h3>상품후기</h3>
-      <form method="post" action="/reply/insert">
-       <input type="hidden" name="jwno" th:value="${vo.jwno}">
-       <textarea rows="5" cols="60" style="float: left" required name="msg"></textarea>
-       <input type=submit value="댓글쓰기" style="height:95px;width:100px;background-color: green">
-      </form>
-     </td>
-    </tr>
-   </table>
+   <h3><strong>상품 후기</strong></h3>
+             <table class="table">
+                <tr>
+                   <td>
+                      <table class="table" th:each="rvo:${list}">
+                         <tr>
+                            <td align="left" th:text="|💝 ${rvo.name} ( ${rvo.regdate} )|"></td>
+                            <td align="right">
+                               <span th:if="${session.id==rvo.id}" class="inline">
+                                  <input type="button" value="수정" class="btn-xs btn-success updates"
+                                    th:alt="${rvo.no}"
+                                  >
+                                  <a th:href="@{/wreply/delete(jwno=${rvo.jwno}, no=${rvo.no})}" class="btn btn-xs btn-danger">삭제</a>
+                               </span>
+                            </td>
+                         </tr>
+                         <tr>
+                            <td colspan="2">
+                               <pre style="white-space: pre-wrap; background-color: white; border: none" th:text="${rvo.msg}"></pre>
+                            </td>
+                         </tr>
+                         <tr th:id="|u${rvo.no}|" class="ups" style="display: none">
+                            <td colspan="2">
+                               <form method="post" action="/wreply/insert">
+                               	  <input type="hidden" name="no" th:value="${rvo.no}">
+                                  <input type="hidden" name="jwno" th:value="${rvo.jwno}">
+                                  <textarea rows="5" cols="60" style="float: left" required name="msg" th:text="${rvo.msg}"></textarea>
+                                  <input type="submit" value="댓글수정" style="height: 95px; width: 100px; background-color: green">
+                               </form>
+                            </td>
+                         </tr>
+                      </table>
+                   </td>
+                </tr>
+             </table>
+             <table class="table" th:if="${session.id!=null}">
+			    <tr>
+			        <td class="text-center">
+			            <form method="post" action="/wreply/insert" style="margin: auto; max-width: 500px;">
+			                <input type="hidden" name="jwno" th:value="${vo.jwno}">
+			                <textarea rows="5" cols="60" style="display: block; margin: 0 auto;" required name="msg"></textarea>
+			                <input type="submit" value="댓글쓰기" style="display: block; margin: 10px auto; height: 40px; width: 100px; background-color: green; border: none; color: white; cursor: pointer;">
+			            </form>
+			        </td>
+			    </tr>
+			</table>
+
   </div>
   </main>
 </div>

@@ -47,13 +47,12 @@
                      </div>
                   </div>
                </div>
-               <div class="col-xl-7 col-lg-7 col-md-9 col-sm-9">
+               <div class="col-xl-7 col-lg-7 col-md-8 col-sm-8">
                   <div class="menu-area">
                      <div class="limit-box">
                         <nav class="main-menu">
                            <ul class="menu-area-main" style="margin-top: 80px;font-size: 20px;">
-                              <li class="active"> <a href="/">Home</a> </li>
-                              <li><a href="/music/list">운동 플레이리스트</a></li>
+                              <li class="active"> <a href="/">Lucky HOME</a> </li>
                               <li><a class="dropwomen" href="/wshop/main">우먼즈</a>
     							 <ul>
 						          <li><a href="/wshop/main">우먼즈 상품 목록</a></li>
@@ -66,6 +65,8 @@
 						          <li><a href="/mshop/find">내가 찾는 맨즈</a></li>
                               	  </ul>
                                </li>
+                              <li><a href="/yp/find">내 주변 요가원 찾기</a> </li>
+                              <li><a href="/music/list">운동 플레이리스트</a></li>
                               <li><a href="/board/list">자유게시판</a> </li>
                               <!-- <li class="mean-last"> <a href="#contact">signup</a> </li> -->
                                
@@ -77,9 +78,10 @@
                <div class="col-xl-2 col-lg-2 col-md-2 col-sm-2" id="logApp" style="margin-bottom: 20px;">
                   <!-- <li><a class="buy" style="margin-top: 100px;" href="#">Login</a></li> -->
                		<ul class="inline" th:if="${session.id==null}">
-        				<li><i class="fa fa-phone"></i>ID:<input type=text ref="id" size=18 v-model="id"> </li>
-       					<li><i class="fa fa-envelope-o"></i>PW:<input type=password ref="pwd" size=18 v-model="pwd"> </li>
-        				<li><input type=button value="로그인" @click="login()"></li>
+        				<li><i class="fa fa-phone"></i>ID:<input type=text ref="id" size=15 v-model="id"> </li>
+       					<li><i class="fa fa-envelope-o"></i>PW:<input type=password ref="pwd" size=15 v-model="pwd" style="margin-bottom: 3px;">
+       					</li>
+        				<li class="text-center"><input type=button value="로그인" @click="login()"></li>
       				</ul>
         				<ul class="inline topul" th:unless="${session.id==null}">
         					<li>🖤<span th:text="${session.name}"></span></li>&nbsp;

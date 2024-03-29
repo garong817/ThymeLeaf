@@ -21,6 +21,8 @@ public class WomenController {
    @Autowired
    private WomenDAO dao;
    
+   @Autowired
+   private WreplyDAO rDao;
 
    @GetMapping("/wshop/main")
    public String wshop_main(String page,Model model,HttpServletRequest request)
@@ -94,8 +96,9 @@ public class WomenController {
    @GetMapping("/wshop/detail")
    public String wshop_detail(int jwno,Model model)
    {
+	   List<Wreply> list=rDao.replyListData(jwno);
       Women vo=dao.findByJwno(jwno);
-
+      model.addAttribute("list", list);
       model.addAttribute("vo",vo);
       model.addAttribute("main_html","wshop/detail");
       return "main";

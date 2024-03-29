@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>요가원 상세페이지</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+let i=0;
+$(function(){
+	$('.updates').click(function(){
+		$('.ups').hide()
+		$('.updates').val('수정')
+		let no=$(this).attr("alt");
+		if(i==0)
+		{
+			$(this).val("취소");
+			$('#u'+no).show()
+			i=1;
+		}
+		else
+		{
+			$(this).val("수정");
+			$('#u'+no).hide()
+			i=0;
+		}
+	})
+})
+</script>
+</head>
+<body>
+<div class="wrapper row3">
+  <main class="container clear">
+  <div class="two_third first">
+   <table class="table text-center">
+    <tr>
+      <td width=30% rowspan="7" align="center">
+       <img th:src="${vo.poster}" style="width: 400px;height: 300px">
+      </td>
+       <td width=15%>업체명</td>
+       <td width=55% th:text="${vo.title}"></td>
+    </tr>
+    <tr>
+      <td width=15%>주소</td>
+      <td width=55% th:text="${vo.address}"></td>
+    </tr>
+	<tr> 
+    <td width="15%">운영시간</td>
+    <td width=55% th:text="${vo.time}">
+      </td>
+	</tr>
+   <tr> 
+    <td width="15%">전화번호</td>
+    <td width=55% th:text="${vo.phone}">
+      </td>
+	</tr>
+	<hr>
+	</table>
+    <table class="table">
+    <tr>
+      <td align="right">
+        <input type=button value="메인으로 돌아가기" onclick="javascript:history.back()">
+      </td>
+    </tr>
+  </table>
+  </div>
+  </main>
+</div>
+</body>
+</html>

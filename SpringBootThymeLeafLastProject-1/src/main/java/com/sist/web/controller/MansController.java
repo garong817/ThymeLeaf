@@ -19,26 +19,26 @@ import java.util.*;
 @Controller
 public class MansController {
    @Autowired
-   private WomenDAO dao;
+   private MansDAO dao;
    
 
-   @GetMapping("/wshop/main")
-   public String wshop_main(String page,Model model,HttpServletRequest request)
+   @GetMapping("/mshop/main")
+   public String mshop_main(String page,Model model,HttpServletRequest request)
    {
       //쿠키
       Cookie[] cookies=request.getCookies();
       
-      List<Women> cList=new ArrayList<Women>();
+      List<Mans> cList=new ArrayList<Mans>(); // 쿠키 맨즈리스트 출력
       int k=0;
       if(cookies!=null)
       {
          for(int i=cookies.length-1;i>=0;i--)
          {
-            if(cookies[i].getName().startsWith("wshop"))
+            if(cookies[i].getName().startsWith("mshop"))
             {
                if(k>8)break;
-               String jwno=cookies[i].getValue();
-               Women r=dao.findByJwno(Integer.parseInt(jwno));
+               String jmno=cookies[i].getValue();
+               Mans r=dao.findByJmno(Integer.parseInt(jmno));
                cList.add(r);
             }
          }
@@ -50,8 +50,8 @@ public class MansController {
       int curpage=Integer.parseInt(page);
       int rowSize=9;
       int start=(rowSize*curpage)-rowSize;
-      List<Women> list=dao.womenListData(start);
-      int count=dao.womenRowCount();
+      List<Mans> list=dao.mansListData(start);
+      int count=dao.mansRowCount();
       int totalpage=(int)(Math.ceil(count/9.0));
       
       final int BLOCK=10;
@@ -68,22 +68,22 @@ public class MansController {
       model.addAttribute("count",count);
       model.addAttribute("list",list);
       model.addAttribute("cList",cList);
-      model.addAttribute("main_html","wshop/main");
+      model.addAttribute("main_html","mshop/main");
       return "main";
    }
    
    // 쿠키
-   @GetMapping("/wshop/before_detail")
-   public String wshop_before(int jwno,RedirectAttributes ra,HttpServletResponse response)
+   @GetMapping("/mshop/before_detail")
+   public String mshop_before(int jmno,RedirectAttributes ra,HttpServletResponse response)
    {
       // 쿠키에 저장
-      Cookie cookie=new Cookie("wshop"+jwno,String.valueOf(jwno));
+      Cookie cookie=new Cookie("mshop"+jmno,String.valueOf(jmno));
       // cookie는 저장시에 문자열만 저장이 가능
       cookie.setPath("/");
       cookie.setMaxAge(60*60*24);
       response.addCookie(cookie); //클라이언트 브라우저로 전송
-      ra.addAttribute("jwno",jwno);
-      return "redirect:../wshop/detail";
+      ra.addAttribute("jmno",jmno);
+      return "redirect:../mshop/detail";
       /*
        *   RedirectAttributes sendRedirect을 이용해서 데이터 전송
        *   Model : forward
@@ -91,31 +91,31 @@ public class MansController {
    }
    
    //상세 페이지
-   @GetMapping("/wshop/detail")
-   public String wshop_detail(int jwno,Model model)
+   @GetMapping("/mshop/detail")
+   public String mshop_detail(int jmno,Model model)
    {
-      Women vo=dao.findByJwno(jwno);
+      Mans vo=dao.findByJmno(jmno);
 
       model.addAttribute("vo",vo);
-      model.addAttribute("main_html","wshop/detail");
+      model.addAttribute("main_html","mshop/detail");
       return "main";
    }
    
    // 상품 찾기
-   @RequestMapping("/wshop/find")
-   public String wshop_find(String page,String title,Model model)
+   @RequestMapping("/mshop/find")
+   public String mshop_find(String page,String title,Model model)
    {
 	   if(title==null)
-		   title="슬림";
+		   title="머슬";
 	   
 	   if(page==null)
 		   page="1";
 	   int curpage=Integer.parseInt(page);
 	   int rowSize=20;
 	   int start=(rowSize*curpage)-rowSize;
-	   List<Women> list=dao.womenFindData(start, title);
-	   int count=dao.womenRowCount();
-	   int totalpage=dao.womenFindTotalPage(title);
+	   List<Mans> list=dao.mansFindData(start, title);
+	   int count=dao.mansRowCount();
+	   int totalpage=dao.mansFindTotalPage(title);
 	   final int BLOCK=10;
 	   int startPage=((curpage-1)/BLOCK*BLOCK)+1;
 	   int endPage=((curpage-1)/BLOCK*BLOCK)+BLOCK;
@@ -130,7 +130,7 @@ public class MansController {
 	   model.addAttribute("count",count);
 	   model.addAttribute("list", list);
        model.addAttribute("title", title);
-	   model.addAttribute("main_html", "wshop/find");
+	   model.addAttribute("main_html", "mshop/find");
 	   return "main";
    }
 }

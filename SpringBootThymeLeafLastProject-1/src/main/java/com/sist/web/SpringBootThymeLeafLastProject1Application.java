@@ -9,6 +9,6 @@ public class SpringBootThymeLeafLastProject1Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(SpringBootThymeLeafLastProject1Application.class, args);
+	
 	}
-
 }
